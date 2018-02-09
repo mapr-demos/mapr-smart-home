@@ -1,4 +1,4 @@
-name := """backend"""
+name := """webapp"""
 organization := "com.mapr.demos"
 
 version := "1.0-SNAPSHOT"
