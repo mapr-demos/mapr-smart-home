@@ -5,23 +5,25 @@ import scala.beans.BeanProperty
 /**
   * Represent's smart home, which is used as source of events.
   */
-class Home {
+class HomeDescriptor {
 
+  @BeanProperty var id = ""
   @BeanProperty var name = ""
-  @BeanProperty var sensors = new java.util.ArrayList[Sensor]()
+  @BeanProperty var sensors = new java.util.ArrayList[SensorDescriptor]()
 
-  override def toString: String = s"Home: [name: $name, sensors: $sensors]"
+  override def toString: String = s"Home: [id: $id, name: $name, sensors: $sensors]"
 }
 
-class Sensor {
+class SensorDescriptor {
 
+  @BeanProperty var id = ""
   @BeanProperty var name = ""
-  @BeanProperty var metrics = new java.util.ArrayList[Metric]()
+  @BeanProperty var metrics = new java.util.ArrayList[MetricDescriptor]()
 
-  override def toString: String = s"Sensor: [name: $name, metrics: $metrics]"
+  override def toString: String = s"Sensor: [id: $id, name: $name, metrics: $metrics]"
 }
 
-class Metric {
+class MetricDescriptor {
 
   @BeanProperty var name = ""
   @BeanProperty var intervalMs : Long = _
@@ -48,8 +50,8 @@ class Strategy {
 
 class RandomRange {
 
-  @BeanProperty var from: Double = _
-  @BeanProperty var to: Double = _
+  @BeanProperty var from: Int = _
+  @BeanProperty var to: Int = _
 
   override def toString: String = s"RandomRange: [from: $from, to: $to]"
 }

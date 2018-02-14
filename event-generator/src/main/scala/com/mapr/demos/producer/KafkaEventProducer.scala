@@ -1,12 +1,26 @@
 package com.mapr.demos.producer
 
-import com.mapr.demos.domain.Home
+import java.util.Properties
+
+import com.google.gson.Gson
+import com.mapr.demos.domain.HomeDescriptor
+import com.mapr.demos.util.HomeEventsGenerator
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 
 import scala.annotation.tailrec
 
-class KafkaEventProducer(topic: String, home: Home) {
+class KafkaEventProducer(topic: String, home: HomeDescriptor, generatingIntervalMs: Long) {
 
-  private val ThreadSleepTimeout = 10
+  private val gson = new Gson
+
+  private val producerProperties = new Properties
+  producerProperties.put("bootstrap.servers", "willbeignored:9092")
+  producerProperties.put("client.id", "MapRSmartHomeEventProducer")
+  producerProperties.put("batch.size", "0") // Note that disabling batching may cause performance issues
+  producerProperties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+  producerProperties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+
+  val producer = new KafkaProducer[String, String](producerProperties)
 
   def start(): Unit = {
     produce(0)
@@ -15,13 +29,12 @@ class KafkaEventProducer(topic: String, home: Home) {
   @tailrec
   private def produce(millis: Long): Unit = {
 
-    import collection.JavaConverters._
-    val metricsToBeSent = home.sensors.asScala.flatMap(s => s.metrics.asScala).filter(m => millis % m.intervalMs == 0)
+    HomeEventsGenerator.events(home, millis).map(gson.toJson).foreach(json => {
+      producer.send(new ProducerRecord[String, String](topic, json))
+      println(s"Event sent: $json")
+    })
 
-    // TODO send via Kafka Producer
-    metricsToBeSent.foreach(println)
-
-    Thread.sleep(ThreadSleepTimeout)
-    produce(millis + ThreadSleepTimeout)
+    Thread.sleep(generatingIntervalMs)
+    produce(millis + generatingIntervalMs)
   }
 }

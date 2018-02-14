@@ -14,8 +14,9 @@ object EventGenerator {
 
     val home = HomeDescriptorParser.fromResources("/home.yml")
     val topic = props.getProperty("topic")
+    val generatingIntervalMs = props.getProperty("generator.intervalMs").toLong
 
-    new KafkaEventProducer(topic, home).start()
+    new KafkaEventProducer(topic, home, generatingIntervalMs).start()
   }
 
 }
