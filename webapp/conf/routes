@@ -8,9 +8,9 @@ GET     /api/v1                           controllers.RootController.apiRoot
 
 # Conversion controller
 GET     /api/v1/conversions               controllers.ConversionController.list
-GET     /api/v1/conversions/:id           controllers.ConversionController.get(id: Long)
-PUT     /api/v1/conversions/:id           controllers.ConversionController.update(id: Long)
-DELETE  /api/v1/conversions/:id           controllers.ConversionController.delete(id: Long)
+GET     /api/v1/conversions/:id           controllers.ConversionController.get(id: String)
+PUT     /api/v1/conversions/:id           controllers.ConversionController.update(id: String)
+DELETE  /api/v1/conversions/:id           controllers.ConversionController.delete(id: String)
 POST    /api/v1/conversions               controllers.ConversionController.add
 
 # Map static resources from the /public folder to the /assets URL path

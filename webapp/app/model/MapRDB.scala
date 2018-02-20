@@ -1,5 +1,0 @@
-package model
-
-object MapRDB {
-
-}
