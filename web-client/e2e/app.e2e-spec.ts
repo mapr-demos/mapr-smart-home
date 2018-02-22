@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('web-client App', () => {
+describe('test-ng4 App', () => {
   let page: AppPage;
 
   beforeEach(() => {
@@ -9,6 +9,6 @@ describe('web-client App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getParagraphText()).toEqual('MapR Smart Home');
   });
 });
