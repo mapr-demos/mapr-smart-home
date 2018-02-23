@@ -10,6 +10,9 @@ import { routerTransition } from '../../router.animations';
 export class DashboardComponent implements OnInit {
 
     homeTableSettings = {
+      delete: {
+          confirmDelete: true,
+      },
       columns: {
         id: {
           title: 'ID'
@@ -26,12 +29,12 @@ export class DashboardComponent implements OnInit {
     public homeTableData: Array<any> = [];
 
     sensorTableSettings = {
+      delete: {
+          confirmDelete: true,
+      },
       columns: {
         id: {
           title: 'ID'
-        },
-        homeId: {
-          title: 'Home'
         },
         name: {
           title: 'Name'
@@ -42,10 +45,11 @@ export class DashboardComponent implements OnInit {
     public sensorTableData: Array<any> = [];
 
     conversionTableSettings = {
+
+      delete: {
+          confirmDelete: true,
+      },
       columns: {
-        sensor: {
-          title: 'Sensor'
-        },
         expression: {
           title: 'Expression'
         }
@@ -87,7 +91,7 @@ export class DashboardComponent implements OnInit {
         id: 2,
         home_id: 1,
         name: "Brightness sensor of home #1",
-        conversions: ["temperature * 10 AS multiplied_temperature"]
+        conversions: ["brightness * 1000 AS scaled_brightness"]
       },
       
       {
@@ -99,19 +103,22 @@ export class DashboardComponent implements OnInit {
 
       // Second home sensors 
       {
-        id: 2,
+        id: 1,
         home_id: 2,
         name: "Temperature sensor of home #2",
         conversions: ["temperature * 100 AS multiplied_100_temperature"]
       },
       
       {
-        id: 3,
+        id: 2,
         home_id: 2,
         name: "Some sensor of home #2",
         conversions: []
       }
     ];
+
+    selectedHomeId;
+    selectedSensorId;
 
     constructor() {
 
@@ -122,11 +129,51 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {}
 
     onHomeSelected(event): void {
+
+        this.selectedHomeId = event.data.id;
         this.sensorTableData = this.sensors.filter(sensor => sensor.home_id === event.data.id)
+
+        this.conversionTableData = []
     }
 
     onSensorSelected(event): void {
-        console.log(event)
+
+        this.selectedSensorId = event.data.id;
+        var homeId = this.selectedHomeId;
+
+        var myArray = this.sensors.filter(sensor => sensor.id === event.data.id && sensor.home_id === homeId).map(s => {
+            return s.conversions.map(conversion => {
+                return { 
+                    expression: conversion 
+                }; 
+            })
+        })
+
+        this.conversionTableData = [].concat.apply([], myArray);
+    }
+
+    onHomeDeleteConfirm(event): void {
+        if (window.confirm('Are you sure you want to delete the home?')) {
+          event.confirm.resolve();
+        } else {
+          event.confirm.reject();
+        }
+    }
+
+    onSensorDeleteConfirm(event): void {
+        if (window.confirm('Are you sure you want to delete the sensor?')) {
+          event.confirm.resolve();
+        } else {
+          event.confirm.reject();
+        }
+    }
+
+    onConversionDeleteConfirm(event): void {
+        if (window.confirm('Are you sure you want to delete the conversion?')) {
+          event.confirm.resolve();
+        } else {
+          event.confirm.reject();
+        }
     }
 
 }
