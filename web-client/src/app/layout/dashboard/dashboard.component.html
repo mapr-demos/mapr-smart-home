@@ -1,0 +1,34 @@
+<div [@routerTransition]>
+    <h2 class="text-muted">Dashboard <small>Registered Smart Homes</small></h2>   
+    <hr>
+
+    <div class="row">
+        <div class="col-xl-6 text-xs-center">
+        	<h4>Smart Homes</h4>
+        	<hr>
+    		<ng2-smart-table 
+    			[settings]="homeTableSettings" 
+    			[source]="homeTableData" 
+    			(userRowSelect)="onHomeSelected($event)"
+				(deleteConfirm)="onHomeDeleteConfirm($event)"></ng2-smart-table>
+        </div>
+        <div class="col-xl-6 text-xs-center">
+        	<h4>Home's Sensors</h4>
+        	<hr>
+    		<ng2-smart-table 
+    			[settings]="sensorTableSettings" 
+    			[source]="sensorTableData" 
+    			(userRowSelect)="onSensorSelected($event)"
+    			(deleteConfirm)="onSensorDeleteConfirm($event)"></ng2-smart-table>
+        </div>
+    </div>
+ 
+ 	<br>
+    <h4>Sensor's Conversions</h4>
+    <hr>  
+    <ng2-smart-table 
+    	[settings]="conversionTableSettings" 
+    	[source]="conversionTableData"
+    	(deleteConfirm)="onConversionDeleteConfirm($event)"></ng2-smart-table>
+
+</div>

@@ -1,0 +1,34 @@
+id: 1
+name: Smart Home 1
+sensors:
+-
+  id: 1
+  name: Boiler temperature sensor
+  metrics:
+  -
+    name: temperature
+    intervalMs: 1560
+    strategy:
+      incrementalRange:
+        from: 0.5
+        to: 100
+        step: 7
+-
+  id: 2
+  name: Complex multi-metric sensor
+  metrics:
+  -
+    name: brightness
+    intervalMs: 170
+    strategy:
+      randomRange:
+        from: 0
+        to: 100
+  -
+    name: speed
+    intervalMs: 500
+    strategy:
+      incrementalRange:
+        from: 0
+        to: 300
+        step: 31

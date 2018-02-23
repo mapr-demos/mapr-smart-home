@@ -1,8 +1,10 @@
 # MapR Smart Home
 
-This repository contains sample event processing system based on MapR Converged Data Platform along with tutuorial which
-walks through a process of system development, starting from defining business requirements and ending with system deployment
-and testing.
+## Contents
+
+* [Overview](#overview)
+* [What's next?](#whats-next)
+* [Tutorial links](#tutorial-links)
 
 ## Overview
 
@@ -29,5 +31,12 @@ built into the MapR Converged Data Platform. It is a highly scalable multi-model
 operations and analytics, and real-time streaming and database workloads to enable a broader set of next-generation 
 data-intensive applications in organizations.
 
-## Documentation links
-* [Tutorial](docs/tutorial/001-introduction.md)
+## What's next?
+
+It's time to get familiar with [Motivation](002-motivation.md) of creating MapR Smart Home System.
+
+## Tutorial links
+
+* [MapR Smart Home](001-introduction.md)
+* [Motivation](002-motivation.md)
+* [System Design](003-system-design.md)
