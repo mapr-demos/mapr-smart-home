@@ -9,7 +9,9 @@
     		<ng2-smart-table 
     			[settings]="homeTableSettings" 
     			[source]="homeTableData" 
-    			(userRowSelect)="onHomeSelected($event)"
+    			(userRowSelect)="onHomeSelected($event)" 
+                (createConfirm)="onHomeCreateConfirm($event)" 
+                (editConfirm)="onHomeUpdateConfirm($event)" 
 				(deleteConfirm)="onHomeDeleteConfirm($event)"></ng2-smart-table>
         </div>
         <div class="col-xl-6 text-xs-center">
@@ -19,6 +21,8 @@
     			[settings]="sensorTableSettings" 
     			[source]="sensorTableData" 
     			(userRowSelect)="onSensorSelected($event)"
+                (createConfirm)="onSensorCreateConfirm($event)"
+                (editConfirm)="onSensorUpdateConfirm($event)"
     			(deleteConfirm)="onSensorDeleteConfirm($event)"></ng2-smart-table>
         </div>
     </div>
@@ -29,6 +33,8 @@
     <ng2-smart-table 
     	[settings]="conversionTableSettings" 
     	[source]="conversionTableData"
+        (createConfirm)="onConversionCreateConfirm($event)"  
+        (editConfirm)="onConversionUpdateConfirm($event)"
     	(deleteConfirm)="onConversionDeleteConfirm($event)"></ng2-smart-table>
 
 </div>
