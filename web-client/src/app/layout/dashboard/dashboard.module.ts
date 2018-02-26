@@ -7,6 +7,10 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { StatModule } from '../../shared';
 
+import {HomeService} from '../../services/home.service';
+import {SensorService} from '../../services/sensor.service';
+
+
 @NgModule({
     imports: [
         CommonModule,
@@ -18,6 +22,10 @@ import { StatModule } from '../../shared';
     ],
     declarations: [
         DashboardComponent
+    ],
+    providers: [
+        HomeService,
+        SensorService
     ]
 })
 export class DashboardModule {}
