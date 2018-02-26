@@ -60,8 +60,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
       case Some(homeJson) => Json.fromJson[Home](homeJson).fold(
         _ => BadRequest(Json.obj("error" -> "Can not instantiate home from request body")),
         valid => {
-          Home.insert(valid)
-          Created
+          val createdHome = Home.insert(valid)
+          Created(Json.toJson(createdHome))
         }
       )
 
@@ -82,8 +82,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
         case Some(homeJson) => Json.fromJson[Home](homeJson).fold(
           _ => BadRequest(Json.obj("error" -> "Can not instantiate home from request body")),
           valid => {
-            Home.update(id, valid)
-            Ok
+            val updatedHome = Home.update(id, valid)
+            Ok(Json.toJson(updatedHome))
           }
         )
 

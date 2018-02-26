@@ -7,11 +7,11 @@
 GET     /api/v1                           controllers.RootController.apiRoot
 
 # Conversion controller
-GET     /api/v1/conversions               controllers.ConversionController.list
-GET     /api/v1/conversions/:id           controllers.ConversionController.get(id: String)
-PUT     /api/v1/conversions/:id           controllers.ConversionController.update(id: String)
-DELETE  /api/v1/conversions/:id           controllers.ConversionController.delete(id: String)
-POST    /api/v1/conversions               controllers.ConversionController.add
+GET     /api/v1/sensors                   controllers.SensorController.list
+GET     /api/v1/sensors/:id               controllers.SensorController.get(id: String)
+PUT     /api/v1/sensors/:id               controllers.SensorController.update(id: String)
+DELETE  /api/v1/sensors/:id               controllers.SensorController.delete(id: String)
+POST    /api/v1/sensors                   controllers.SensorController.add
 
 # Home controller
 GET     /api/v1/homes                     controllers.HomeController.list
