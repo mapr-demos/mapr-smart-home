@@ -20,19 +20,23 @@ abstract class MapRDBDocument[D] {
     if (doc != null) jsonStringToModel(doc.asJsonString()) else None
   }
 
-  def insert(model: D): Unit = {
+  def insert(model: D): D = {
 
     val jsonString = modelToJsonString(model)
     val id = UUID.randomUUID().toString
     val doc = connection.newDocument(jsonString)
 
     connection.getStore(tablePath).insert(id, doc)
+
+    findById(id).get
   }
 
-  def update(id: String, model: D): Unit = {
+  def update(id: String, model: D): D = {
     val jsonString = modelToJsonString(model)
     val doc = connection.newDocument(jsonString)
     connection.getStore(tablePath).replace(id, doc)
+
+    findById(id).get
   }
 
   def exists(id: String): Boolean = connection.getStore(tablePath).findById(id) != null
