@@ -30,7 +30,7 @@ object HomeEventsGenerator {
       val strategy = metric.strategy.randomRange
       val metricValue = strategy.from + random.nextInt((strategy.to - strategy.from) + 1)
 
-      Some(Event(home.id, sensor.id, metric.name, metricValue.toString))
+      Some(Event(home.id, sensor.id, Map(metric.name -> metricValue.toString)))
     } else if (metric.strategy.incrementalRange != null) {
 
       val strategy = metric.strategy.incrementalRange
@@ -46,7 +46,7 @@ object HomeEventsGenerator {
 
       lastMetricValues.put(key, newValue.toString)
 
-      Some(Event(home.id, sensor.id, metric.name, newValue.toString))
+      Some(Event(home.id, sensor.id, Map(metric.name -> newValue.toString)))
     } else {
       None
     }

@@ -2,8 +2,9 @@ package com.mapr.demos.producer
 
 import java.util.Properties
 
-import com.google.gson.Gson
-import com.mapr.demos.domain.HomeDescriptor
+import play.api.libs.json.{Json, OWrites}
+
+import com.mapr.demos.domain.{Event, HomeDescriptor}
 import com.mapr.demos.util.HomeEventsGenerator
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 
@@ -11,7 +12,7 @@ import scala.annotation.tailrec
 
 class KafkaEventProducer(topic: String, home: HomeDescriptor, generatingIntervalMs: Long) {
 
-  private val gson = new Gson
+  implicit val eventWrites: OWrites[Event] = Json.writes[Event]
 
   private val producerProperties = new Properties
   producerProperties.put("bootstrap.servers", "willbeignored:9092")
@@ -29,7 +30,7 @@ class KafkaEventProducer(topic: String, home: HomeDescriptor, generatingInterval
   @tailrec
   private def produce(millis: Long): Unit = {
 
-    HomeEventsGenerator.events(home, millis).map(gson.toJson).foreach(json => {
+    HomeEventsGenerator.events(home, millis).map(e => Json.toJson(e).toString()).foreach(json => {
       producer.send(new ProducerRecord[String, String](topic, json))
       println(s"Event sent: $json")
     })
