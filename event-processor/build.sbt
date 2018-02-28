@@ -19,6 +19,9 @@ lazy val root = (project in file(".")).
     libraryDependencies += sparkCore,
     libraryDependencies += scalaTest % Test,
     libraryDependencies += sparkStreaming ,
-    libraryDependencies += maprStreams
+    libraryDependencies += maprStreams,
+    libraryDependencies += maprDbOjai,
+    libraryDependencies += sparkSql,
+    libraryDependencies += playJson
 
   )

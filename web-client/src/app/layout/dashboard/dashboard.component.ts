@@ -209,11 +209,10 @@ export class DashboardComponent implements OnInit {
     onConversionUpdateConfirm(event): void {
         if (window.confirm('Are you sure you want to save?')) {
           
-          // TODO actually update converion
-          var index = this.selectedSensor.conversions.indexOf(event.newData.expression);
+          var index = this.selectedSensor.conversions.indexOf(event.data.expression);
           this.selectedSensor.conversions.splice(index, 1);
-          this.selectedSensor.conversions.push(event.newData.expression);
-
+          this.selectedSensor.conversions.push(event.newData.expression)
+  
           this.sensorService.updateSensor(this.selectedSensor).then((updated) => {
               event.confirm.resolve(event.newData);
           });
@@ -245,7 +244,6 @@ export class DashboardComponent implements OnInit {
     onConversionDeleteConfirm(event): void {
         if (window.confirm('Are you sure you want to delete the conversion?')) {
 
-          // TODO actually update converion
           var index = this.selectedSensor.conversions.indexOf(event.data.expression);
           this.selectedSensor.conversions.splice(index, 1);
   

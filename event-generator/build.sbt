@@ -12,7 +12,7 @@ lazy val root = (project in file(".")).
     resolvers += "JBoss 3rd-party" at "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/",
     libraryDependencies += scalaTest % Test,
     libraryDependencies += snakeYaml,
-    libraryDependencies += gson,
+    libraryDependencies += playJson,
     libraryDependencies += maprStreams,
     libraryDependencies += commonsLogging
 )
