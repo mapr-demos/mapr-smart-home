@@ -1,8 +1,8 @@
-id: 1
+id: 553d1f54-8956-4452-9e98-b7981fa133da
 name: Smart Home 1
 sensors:
 -
-  id: 1
+  id: 501c21a6-829a-4b1a-84f1-2d2f3c161fe1
   name: Boiler temperature sensor
   metrics:
   -
@@ -14,7 +14,7 @@ sensors:
         to: 100
         step: 7
 -
-  id: 2
+  id: 586a6d46-e891-4aeb-8f94-d4efac836df2
   name: Complex multi-metric sensor
   metrics:
   -
