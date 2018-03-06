@@ -6,6 +6,10 @@
 # API root controller
 GET     /api/v1                           controllers.RootController.apiRoot
 
+GET     /ws                               controllers.RootController.ws
+GET     /                                 controllers.RootController.index
+
+
 # Conversion controller
 GET     /api/v1/sensors                   controllers.SensorController.list
 GET     /api/v1/sensors/:id               controllers.SensorController.get(id: String)

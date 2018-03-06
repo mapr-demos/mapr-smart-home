@@ -14,6 +14,8 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2
 
 libraryDependencies += "com.mapr.ojai" % "mapr-ojai-driver" % "6.0.0-mapr"
 libraryDependencies += "com.mapr.db" % "maprdb" % "6.0.0-mapr"
+libraryDependencies += "com.mapr.streams" % "mapr-streams" % "6.0.0-mapr"
+
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.mapr.demos.controllers._"
