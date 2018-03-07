@@ -4,7 +4,8 @@ import {HomeService} from '../../services/home.service';
 import {SensorService} from '../../services/sensor.service';
 import {Home} from '../../models/home';
 import {Sensor} from '../../models/sensor';
-
+import {Notification} from '../../models/notification';
+import { Ng2SmartTableModule, LocalDataSource } from 'ng2-smart-table'
 
 @Component({
     selector: 'app-dashboard',
@@ -25,10 +26,6 @@ export class DashboardComponent implements OnInit {
           confirmDelete: true,
       },
       columns: {
-        id: {
-          title: 'ID',
-          editable: false
-        },
         name: {
           title: 'Name'
         },
@@ -49,10 +46,6 @@ export class DashboardComponent implements OnInit {
           confirmDelete: true,
       },
       columns: {
-        id: {
-          title: 'ID',
-          editable: false
-        },
         name: {
           title: 'Name'
         }
@@ -76,10 +69,43 @@ export class DashboardComponent implements OnInit {
       }
     };
 
+    violatedConditionsTableSettings = {
+      actions: {
+          add: false,
+          edit: false,
+          delete: false
+      },
+      columns: {
+        dateString: {
+          title: 'Date',
+          editable: false
+        },
+        homeName: {
+          title: 'Home',
+          editable: false
+        },
+        sensorName: {
+          title: 'Sensor',
+          editable: false
+        },
+        condition: {
+          title: 'Violated',
+          editable: false
+        },
+        metrics: {
+          title: 'Metrics',
+          editable: false
+        }
+      }
+    };
+
     public homeTableData: Array<Home> = [];
     public sensorTableData: Array<Sensor> = [];
     public conversionTableData: Array<any> = [];
-   
+    public notifications: Array<Notification> = [];
+
+    public notificationsSource = new LocalDataSource(this.notifications);
+
     private selectedHomeId: string;
     private selectedSensor: Sensor;
 
@@ -91,6 +117,46 @@ export class DashboardComponent implements OnInit {
         this.homeService.getHomes().subscribe((homes) => {
             this.homeTableData = homes;
         });
+
+         // TODO WEBSOCKET CONNECTION
+        var websocket = new WebSocket("ws://node14:9000/ws");
+        websocket.onopen = function(evt) { 
+            console.log("OPEN EVENT");
+            console.log(evt);
+        };
+
+        websocket.onclose =  function(evt) { 
+            console.log("ON CLOSE EVENT");
+            console.log(evt);
+           
+        };
+
+        var me = this;
+        websocket.onmessage = function(evt) {
+
+               evt.data.split(/\r?\n/).forEach(jsonNotifocation => {
+
+                    var notification = JSON.parse(jsonNotifocation);
+                    console.log(notification);
+
+                    me.notificationsSource.prepend(
+                    {
+                        homeName: notification.homeName,
+                        sensorName: notification.sensorName,
+                        metrics: JSON.stringify(notification.event.metrics),
+                        condition: notification.condition,
+                        dateString: new Date().toLocaleString()
+                    });
+
+               })
+
+        };
+
+        websocket.onerror = function(evt) { 
+            console.log("ERROR EVENT");
+            console.log(evt);
+        };
+
     }
 
     onHomeSelected(event): void {

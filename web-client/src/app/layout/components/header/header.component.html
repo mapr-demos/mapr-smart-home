@@ -10,36 +10,6 @@
         </form>
         <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item dropdown" ngbDropdown>
-                <a class="nav-link" id="notifications_list" href="javascript:void(0)" ngbDropdownToggle [style.color]='bellColor' (click)="setDefaultBellColor()">
-                    <i class="fa fa-bell"></i> <b class="caret"></b><span class="sr-only">(current)</span>
-                </a>
-                <ul class="dropdown-menu-right messages" ngbDropdownMenu>
-                    
-                    <li *ngFor='let notification of notifications' class="media">
-                        <div class="media-body">
-                            <p class="small text-muted"><i class="fa fa-clock-o"></i> {{notification.dateString}}</p>
-                            <h5 class="mt-0 mb-1">Home:</h5>
-                            <p class="last"> 
-                            {{notification.homeName}}
-                            </p>
-                            <h5 class="mt-0 mb-1">Sensor:</h5>
-                            <p class="last"> 
-                            {{notification.sensorName}}
-                            </p>
-                            <h5 class="mt-0 mb-1">Condition violated:</h5>
-                            <p class="last"> 
-                            {{notification.condition}}
-                            </p>
-                            <h5 class="mt-0 mb-1">Metrics:</h5>
-                            <p class="last"> 
-                            {{notification.metrics}}
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-
         </ul>
          <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown" ngbDropdown>
