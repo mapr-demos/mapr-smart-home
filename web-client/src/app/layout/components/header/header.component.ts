@@ -55,19 +55,21 @@ export class HeaderComponent implements OnInit {
                evt.data.split(/\r?\n/).forEach(jsonNotifocation => {
 
                     var notification = JSON.parse(jsonNotifocation);
+                    console.log(notification);
 
-                    if(me.notifications.length > 4) {
+                    if(me.notifications.length > 2) {
                        me.notifications.shift();
                     } 
 
                     me.notifications.push(
                     {
+                        homeName: notification.homeName,
+                        sensorName: notification.sensorName,
+                        metrics: JSON.stringify(notification.event.metrics),
                         condition: notification.condition,
                         dateString: new Date().toLocaleString()
                     })
                })
-
-
 
         };
 
@@ -76,6 +78,15 @@ export class HeaderComponent implements OnInit {
             console.log(evt);
         };
 
+    }
+
+    homeNameById(homeId: string) : string {
+        return "Some home";
+    }
+
+
+    sensorNameById(sensorId: string) : string {
+        return "Some sensor";
     }
 
     setDefaultBellColor() {

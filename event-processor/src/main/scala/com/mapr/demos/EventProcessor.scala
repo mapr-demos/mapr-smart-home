@@ -87,7 +87,10 @@ object EventProcessor {
             .foreach(violatedEvent => {
 
               log.info(s"$violatedEvent violates condition: '$condition'")
-              val jsonString = Json.toJson(Notification(violatedEvent, condition)).toString()
+              val home = Home.findById(sensor.home_id)
+              val homeName = if(home.isDefined) home.get.name else "Not found"
+
+              val jsonString = Json.toJson(Notification(violatedEvent, condition, homeName, sensor.name)).toString()
               kafkaProducer.send(new ProducerRecord[String, String]("/apps/test-stream:notifications", jsonString))
 
             })
@@ -104,4 +107,4 @@ object EventProcessor {
 
 case class Event(homeId: String, sensorId: String, metrics: Map[String, String])
 
-case class Notification(event: Event, condition: String)
+case class Notification(event: Event, condition: String, homeName: String, sensorName: String)

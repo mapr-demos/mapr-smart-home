@@ -19,9 +19,21 @@
                     <li *ngFor='let notification of notifications' class="media">
                         <div class="media-body">
                             <p class="small text-muted"><i class="fa fa-clock-o"></i> {{notification.dateString}}</p>
+                            <h5 class="mt-0 mb-1">Home:</h5>
+                            <p class="last"> 
+                            {{notification.homeName}}
+                            </p>
+                            <h5 class="mt-0 mb-1">Sensor:</h5>
+                            <p class="last"> 
+                            {{notification.sensorName}}
+                            </p>
                             <h5 class="mt-0 mb-1">Condition violated:</h5>
                             <p class="last"> 
                             {{notification.condition}}
+                            </p>
+                            <h5 class="mt-0 mb-1">Metrics:</h5>
+                            <p class="last"> 
+                            {{notification.metrics}}
                             </p>
                         </div>
                     </li>
