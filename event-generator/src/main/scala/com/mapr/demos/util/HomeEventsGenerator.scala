@@ -2,7 +2,6 @@ package com.mapr.demos.util
 
 import com.mapr.demos.domain.{Event, HomeDescriptor, MetricDescriptor, SensorDescriptor}
 
-// TODO refactor
 object HomeEventsGenerator {
 
   private val lastMetricValues: scala.collection.mutable.Map[(String, String, String), String] = scala.collection.mutable.Map()
@@ -30,7 +29,7 @@ object HomeEventsGenerator {
       val strategy = metric.strategy.randomRange
       val metricValue = strategy.from + random.nextInt((strategy.to - strategy.from) + 1)
 
-      Some(Event(home.id, sensor.id, Map(metric.name -> metricValue.toString)))
+      Some(Event(System.currentTimeMillis(), home.id, sensor.id, Map(metric.name -> metricValue.toString)))
     } else if (metric.strategy.incrementalRange != null) {
 
       val strategy = metric.strategy.incrementalRange
@@ -46,7 +45,7 @@ object HomeEventsGenerator {
 
       lastMetricValues.put(key, newValue.toString)
 
-      Some(Event(home.id, sensor.id, Map(metric.name -> newValue.toString)))
+      Some(Event(System.currentTimeMillis(), home.id, sensor.id, Map(metric.name -> newValue.toString)))
     } else {
       None
     }
