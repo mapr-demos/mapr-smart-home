@@ -6,8 +6,8 @@ case class Sensor(_id: Option[String], home_id: String, name: String, conversion
 
 object Sensor extends MapRDBDocument[Sensor] {
 
-  implicit val conversionWrites: OWrites[Sensor] = Json.writes[Sensor]
-  implicit val conversionReads: Reads[Sensor] = Json.reads[Sensor]
+  implicit val sensorWrites: OWrites[Sensor] = Json.writes[Sensor]
+  implicit val sensorReads: Reads[Sensor] = Json.reads[Sensor]
 
   private[demos] def tablePath: String = "/apps/sensors"
 
