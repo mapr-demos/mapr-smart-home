@@ -32,8 +32,10 @@ object HomeDescriptorParser {
 
     require(home != null, "Home can not be null")
 
-    home.sensors.forEach(s =>
-      s.metrics.forEach(m => {
+    import scala.collection.JavaConverters._
+
+    home.sensors.asScala.foreach(s =>
+      s.metrics.asScala.foreach(m => {
         // TODO use 'generator.intervalMs' as default
         require(m.intervalMs > 0, s"Metric producing interval must be greater than zero, but got: $m")
         require(m.strategy != null, s"Metric strategy is required for $m")
