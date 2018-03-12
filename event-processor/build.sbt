@@ -1,6 +1,6 @@
-import Dependencies._
+//import Dependencies._
 
-lazy val root = (project in file(".")).
+lazy val eventProcessor = (project in file(".")).
   settings(
     inThisBuild(List(
       organization := "com.mapr.demos",
@@ -15,13 +15,13 @@ lazy val root = (project in file(".")).
     dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % "2.7.2",
     dependencyOverrides += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.7.2",
 
-    libraryDependencies += sparkStreamingKafka,
-    libraryDependencies += sparkCore,
-    libraryDependencies += scalaTest % Test,
-    libraryDependencies += sparkStreaming ,
-    libraryDependencies += maprStreams,
-    libraryDependencies += maprDbOjai,
-    libraryDependencies += sparkSql,
-    libraryDependencies += playJson
+    libraryDependencies +=  "org.apache.spark" %% "spark-streaming-kafka-0-9" % "2.1.0-mapr-1801",
+    libraryDependencies += "org.apache.spark" %% "spark-core" % "2.1.0-mapr-1801",
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % Test,
+    libraryDependencies +=  "org.apache.spark" % "spark-sql_2.11" % "2.1.0-mapr-1801" ,
+    libraryDependencies += "org.apache.spark" %% "spark-streaming" % "2.1.0-mapr-1801",
+    libraryDependencies += "com.mapr.streams" % "mapr-streams" % "6.0.0-mapr",
+    libraryDependencies += "com.mapr.ojai" % "mapr-ojai-driver" % "6.0.0-mapr",
+    libraryDependencies +=  "com.typesafe.play" % "play-json_2.11" % "2.6.8"
 
   )

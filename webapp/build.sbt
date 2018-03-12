@@ -3,9 +3,9 @@ organization := "com.mapr.demos"
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val webapp = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.12.3"
+scalaVersion := "2.11.6"
 
 resolvers += "mapr-releases" at "http://repository.mapr.com/maven/"
 
