@@ -31,7 +31,12 @@ object OpenTSDBSink {
   implicit val eventWrites: OWrites[Event] = Json.writes[Event]
   implicit val eventReads: Reads[Event] = Json.reads[Event]
 
+  var tsdbHost = "localhost"
+
   def main(args: Array[String]): Unit = {
+
+        tsdbHost = if(args.length > 0) args(0) else props.getProperty("tsd.host")
+
         consumer.subscribe(Collections.singletonList(props.getProperty("topic")))
         consume()
   }
@@ -58,7 +63,7 @@ object OpenTSDBSink {
       .foreach(event => {
         val records = TSDBRecord.fromEvent(event)
         log.debug(s"Records stored: \n${records.mkString("\n")}")
-        TSDBRecord.store(records)
+        TSDBRecordWriter.store(tsdbHost, records)
       })
 
     Thread.sleep(ConsumingIntervalMs)
@@ -80,12 +85,15 @@ object TSDBRecord {
     event.metrics.map(m => TSDBRecord(event.timestamp, m._2, m._1, event.homeId, event.sensorId)).toSeq
   }
 
-  def store(records: Seq[TSDBRecord]): Unit = {
+}
+
+object TSDBRecordWriter {
+  def store(host: String, records: Seq[TSDBRecord]): Unit = {
 
     import java.io._
     import java.net._
 
-    val s = new Socket(InetAddress.getByName(props.getProperty("tsd.host")), 4242)
+    val s = new Socket(InetAddress.getByName(host), 4242)
     val out = new PrintStream(s.getOutputStream)
 
     records.map(r => s"put $r").foreach(r => out.println(r))
@@ -93,5 +101,4 @@ object TSDBRecord {
     out.flush()
     s.close()
   }
-
 }

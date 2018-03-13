@@ -113,22 +113,22 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-     
+
         this.homeService.getHomes().subscribe((homes) => {
             this.homeTableData = homes;
         });
 
          // TODO WEBSOCKET CONNECTION
-        var websocket = new WebSocket("ws://node14:9000/ws");
-        websocket.onopen = function(evt) { 
+        var websocket = new WebSocket("ws://localhost:9000/ws");
+        websocket.onopen = function(evt) {
             console.log("OPEN EVENT");
             console.log(evt);
         };
 
-        websocket.onclose =  function(evt) { 
+        websocket.onclose =  function(evt) {
             console.log("ON CLOSE EVENT");
             console.log(evt);
-           
+
         };
 
         var me = this;
@@ -152,7 +152,7 @@ export class DashboardComponent implements OnInit {
 
         };
 
-        websocket.onerror = function(evt) { 
+        websocket.onerror = function(evt) {
             console.log("ERROR EVENT");
             console.log(evt);
         };
@@ -178,19 +178,19 @@ export class DashboardComponent implements OnInit {
 
         var myArray = this.sensorTableData.filter(sensor => sensor.id === event.data.id).map(s => {
             return s.conversions.map(conversion => {
-                return { 
-                    expression: conversion 
-                }; 
+                return {
+                    expression: conversion
+                };
             })
         })
 
         this.conversionTableData = [].concat.apply([], myArray);
     }
 
-    // Create handlers 
+    // Create handlers
     onHomeCreateConfirm(event): void {
         if (window.confirm('Are you sure you want to create?')) {
-          
+
           this.homeService.createNewHome(event.newData).then((created) => {
             event.confirm.resolve(created);
           });
@@ -249,7 +249,7 @@ export class DashboardComponent implements OnInit {
     // Update handlers
     onHomeUpdateConfirm(event): void {
         if (window.confirm('Are you sure you want to save?')) {
-          
+
           this.homeService.updateHome(event.newData).then((updated) => {
             event.confirm.resolve(updated);
           });
@@ -261,7 +261,7 @@ export class DashboardComponent implements OnInit {
 
     onSensorUpdateConfirm(event): void {
         if (window.confirm('Are you sure you want to save?')) {
-          
+
           this.sensorService.updateSensor(event.newData).then((updated) => {
             event.confirm.resolve(updated);
           });
@@ -274,11 +274,11 @@ export class DashboardComponent implements OnInit {
 
     onConversionUpdateConfirm(event): void {
         if (window.confirm('Are you sure you want to save?')) {
-          
+
           var index = this.selectedSensor.conversions.indexOf(event.data.expression);
           this.selectedSensor.conversions.splice(index, 1);
           this.selectedSensor.conversions.push(event.newData.expression)
-  
+
           this.sensorService.updateSensor(this.selectedSensor).then((updated) => {
               event.confirm.resolve(event.newData);
           });
@@ -312,7 +312,7 @@ export class DashboardComponent implements OnInit {
 
           var index = this.selectedSensor.conversions.indexOf(event.data.expression);
           this.selectedSensor.conversions.splice(index, 1);
-  
+
           this.sensorService.updateSensor(this.selectedSensor).then((updated) => {
               event.confirm.resolve();
           });
