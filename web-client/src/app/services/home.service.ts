@@ -30,7 +30,7 @@ const mapToHomeRequest = ({
 @Injectable()
 export class HomeService {
 
-  private static API_URL = 'http://node14:9000';
+  private static API_URL = 'http://localhost:9000';
   private static SERVICE_URL = '/api/v1/homes';
 
   constructor(private http: HttpClient) {

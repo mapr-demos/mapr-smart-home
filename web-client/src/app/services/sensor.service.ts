@@ -34,7 +34,7 @@ const mapToSensorRequest = ({
 @Injectable()
 export class SensorService {
 
-  private static API_URL = 'http://node14:9000';
+  private static API_URL = 'http://localhost:9000';
   private static SERVICE_URL = '/api/v1/sensors';
 
   constructor(private http: HttpClient) {
@@ -87,6 +87,6 @@ export class SensorService {
       })
       .toPromise()
   }
- 
+
 
 }
