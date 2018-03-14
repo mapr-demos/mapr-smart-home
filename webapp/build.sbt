@@ -22,6 +22,7 @@ assemblyMergeStrategy in assembly := {
   case PathList("META-INF", m) if m.equalsIgnoreCase("MANIFEST.MF") => MergeStrategy.discard
   case x => MergeStrategy.first
 }
+
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.mapr.demos.controllers._"
 

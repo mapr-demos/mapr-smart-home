@@ -1,7 +1,8 @@
 FROM maprtech/pacc:6.0.0_4.0.0_centos7
 
-ARG username
-ARG password
+# GitHub credentials for cloning MapR DB JSON Grafana Plugin
+# ARG username
+# ARG password
 
 # Angular Web Client
 EXPOSE 4200
@@ -31,19 +32,20 @@ RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
 RUN sudo yum install -y nodejs gcc-c++ make git
 
 # Install Maven
-ENV MAVEN_VERSION 3.3.9
+# ENV MAVEN_VERSION 3.3.9
 
-RUN mkdir -p /usr/share/maven \
-  && curl -fsSL http://apache.osuosl.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz \
-    | tar -xzC /usr/share/maven --strip-components=1 \
-  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+# RUN mkdir -p /usr/share/maven \
+#  && curl -fsSL http://apache.osuosl.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz \
+#    | tar -xzC /usr/share/maven --strip-components=1 \
+#  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-ENV MAVEN_HOME /usr/share/maven
+# ENV MAVEN_HOME /usr/share/maven
 
 # Install web-client node modules
 RUN rm -Rf /usr/share/mapr-apps/mapr-smart-home/web-client/node_modules
 WORKDIR /usr/share/mapr-apps/mapr-smart-home/web-client
 RUN npm install
+RUN npm install forever -g
 
 WORKDIR /usr/share/mapr-apps/mapr-smart-home/event-generator
 RUN sbt assembly
@@ -60,14 +62,14 @@ RUN sbt assembly
 WORKDIR /usr/share/mapr-apps/mapr-smart-home/webapp
 RUN sbt 'set test in assembly := {}' clean assembly
 
-# Install Grafana
-RUN sudo yum install -y mapr-grafana
+# TODO Install Grafana
+# RUN sudo yum install -y mapr-grafana
 
 # Install MapR-DB JSON Grafana Plugin
-WORKDIR /usr/share/mapr-apps/mapr-smart-home/
-RUN git clone https://$username:$password@github.com/mapr-demos/mapr-db-json-grafana-plugin.git
+# WORKDIR /usr/share/mapr-apps/mapr-smart-home/
+# RUN git clone https://$username:$password@github.com/mapr-demos/mapr-db-json-grafana-plugin.git
 
-WORKDIR /usr/share/mapr-apps/mapr-smart-home/mapr-db-json-grafana-plugin
-RUN mvn clean package -DskipTests
+# WORKDIR /usr/share/mapr-apps/mapr-smart-home/mapr-db-json-grafana-plugin
+# RUN mvn clean package -DskipTests
 
 CMD ["/usr/share/mapr-apps/mapr-smart-home/run.sh"]
