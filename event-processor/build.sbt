@@ -1,5 +1,3 @@
-//import Dependencies._
-
 lazy val eventProcessor = (project in file(".")).
   settings(
     inThisBuild(List(
@@ -27,7 +25,34 @@ lazy val eventProcessor = (project in file(".")).
   )
 
 assemblyMergeStrategy in assembly := {
-  case r if r.startsWith("reference.conf") => MergeStrategy.concat
-  case PathList("META-INF", m) if m.equalsIgnoreCase("MANIFEST.MF") => MergeStrategy.discard
-  case x => MergeStrategy.first
+  case PathList("com", "mapr", "demos", xs @ _*) => MergeStrategy.last
+  case PathList("org","aopalliance", xs @ _*) => MergeStrategy.last
+  case PathList("javax", "inject", xs @ _*) => MergeStrategy.last
+  case PathList("javax", "servlet", xs @ _*) => MergeStrategy.last
+  case PathList("javax", "activation", xs @ _*) => MergeStrategy.last
+  case PathList("org", "jboss", xs @ _*) => MergeStrategy.last
+  case PathList("io", "netty", xs @ _*) => MergeStrategy.last
+  case PathList("javassist", xs @ _*) => MergeStrategy.last
+  case PathList("org", "apache", xs @ _*) => MergeStrategy.last
+  case PathList("com", "google", xs @ _*) => MergeStrategy.last
+  case PathList("com", "esotericsoftware", xs @ _*) => MergeStrategy.last
+  case PathList("com", "codahale", xs @ _*) => MergeStrategy.last
+  case PathList("com", "yammer", xs @ _*) => MergeStrategy.last
+  case "about.html" => MergeStrategy.rename
+  case "META-INF/ECLIPSEF.RSA" => MergeStrategy.last
+  case "META-INF/mailcap" => MergeStrategy.last
+  case "META-INF/mimetypes.default" => MergeStrategy.last
+  case "plugin.properties" => MergeStrategy.last
+  case "log4j.properties" => MergeStrategy.last
+  case "git.properties" => MergeStrategy.last
+  case "META-INF/drill-module.conf" => MergeStrategy.last
+  case "drill-module.conf" => MergeStrategy.last
+  case "META-INF/drill-module-scan/registry.json" => MergeStrategy.last
+  case "META-INF/io.netty.versions.properties" => MergeStrategy.last
+  case "META-INF/libnetty-transport-native-epoll.so" => MergeStrategy.last
+  case "META-INF/native/libnetty-transport-native-epoll.so" => MergeStrategy.last
+  case "overview.html" => MergeStrategy.last  // Added this for 2.1.0 I think
+  case x =>
+    val oldStrategy = (assemblyMergeStrategy in assembly).value
+    oldStrategy(x)
 }
