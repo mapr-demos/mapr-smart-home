@@ -20,13 +20,13 @@ produced by smart homes.
 The system must:
 * collect metrics
 
-Various metrics from multiples devices per each home must be collected. There must be the ability to add new home/device easily. 
-Possible metrics: temperature, electricity consumption.
+Various metrics from multiples devices per each home must be collected. There must be the ability to add new home/device 
+easily. Possible metrics: temperature, electricity consumption.
 
-* convert metrics using user-defined conversions
+* define metrics conditions
 
-There must be the ability for the users to define metrics conversions. Possible conversions: convert Fahrenheit to Celsius, 
-convert electricity/water/gas consumption to house maintenance cost.
+There must be the ability for the users to define metrics conditions. In the case when some of the conditions are 
+violated, a notification will be sent.
 
 * persist metrics
 
@@ -34,8 +34,8 @@ Metrics must be persisted in reliable storage.
 
 * provide UI for visualizing metrics and metrics' sources
 
-There must be a UI for system monitoring, which must provide information about active metrics sources and available 
-metrics. UI also can be used for defining metrics conversions, system configuration.
+There must be a UI for system monitoring, which must provide information about active metrics sources and notifications 
+of violated conditions. UI also can be used for defining metrics conditions. 
 
 ## What's next?
 
