@@ -34,7 +34,7 @@ class RootController @Inject()(cc: ControllerComponents) extends AbstractControl
   def ws = WebSocket.accept[String, String] { request =>
 
 
-    consumer.subscribe(Collections.singletonList("/apps/test-stream:notifications"))
+    consumer.subscribe(Collections.singletonList("/apps/smart-home-stream:notifications"))
 
     import scala.concurrent.duration._
 

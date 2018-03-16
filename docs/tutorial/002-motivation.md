@@ -46,4 +46,7 @@ The [System Design](003-system-design.md) document describes the architecture of
 * [MapR Smart Home](001-introduction.md)
 * [Motivation](002-motivation.md)
 * [System Design](003-system-design.md)
-
+* [Setting up your environment](004-setting-up-your-environment.md)
+* [System deployment](005-system-deployment.md)
+* [Grafana for event visualization](006-grafana-for-event-visualization.md)
+* [Dockerization](007-dockerization.md)

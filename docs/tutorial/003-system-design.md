@@ -39,7 +39,7 @@ Receives events and stores them at MapR-DB JSON Table.
 
 * Events OpenTSDB Sink
 
-Receives events and stores them at OpenTSDB.
+Receives events and stores them at OpenTSDB. Each of sinks can be running standalone or along with another one.
 
 
 ![](../images/smart-home-design.png?raw=true "System design")
@@ -51,9 +51,15 @@ MapR-DB JSON Table. Also, its possible to use OpenTSDB Datasource in case when O
 
 ## What's next?
 
+[Setting up your environment](004-setting-up-your-environment.md) document explains how to prepare MapR Cluster for 
+running MapR Smart Home Event Processing System.
+
 ## Tutorial links
 
 * [MapR Smart Home](001-introduction.md)
 * [Motivation](002-motivation.md)
 * [System Design](003-system-design.md)
-
+* [Setting up your environment](004-setting-up-your-environment.md)
+* [System deployment](005-system-deployment.md)
+* [Grafana for event visualization](006-grafana-for-event-visualization.md)
+* [Dockerization](007-dockerization.md)

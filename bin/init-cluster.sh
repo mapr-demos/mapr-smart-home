@@ -3,8 +3,8 @@
 #######################################################################
 # Globals definition
 #######################################################################
-STREAM_PATH=/apps/test-stream
-EVENTS_TOPIC_NAME=test
+STREAM_PATH=/apps/smart-home-stream
+EVENTS_TOPIC_NAME=events
 NOTIFICATIONS_TOPIC_NAME=notifications
 
 HOMES_TABLE_PATH=/apps/homes
