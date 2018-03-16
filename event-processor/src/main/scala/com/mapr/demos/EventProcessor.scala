@@ -45,7 +45,7 @@ object EventProcessor {
     val events = KafkaUtils.createDirectStream[String, String](
       ssc,
       LocationStrategies.PreferConsistent,
-      ConsumerStrategies.Subscribe[String, String](Set("/apps/test-stream:test"), kafkaParams))
+      ConsumerStrategies.Subscribe[String, String](Set("/apps/smart-home-stream:events"), kafkaParams))
 
 
     events.map(_.value()).mapPartitions(jsonStringIterator => {
@@ -91,7 +91,7 @@ object EventProcessor {
               val homeName = if(home.isDefined) home.get.name else "Not found"
 
               val jsonString = Json.toJson(Notification(violatedEvent, condition, homeName, sensor.name)).toString()
-              kafkaProducer.send(new ProducerRecord[String, String]("/apps/test-stream:notifications", jsonString))
+              kafkaProducer.send(new ProducerRecord[String, String]("/apps/smart-home-stream:notifications", jsonString))
 
             })
 
