@@ -13,7 +13,7 @@ object EventGenerator {
   def main(args: Array[String]): Unit = {
 
     val home = HomeDescriptorParser.fromResources("/home.yml")
-    val topic = props.getProperty("topic")
+    val topic = props.getProperty("topic") + "-" + home.id
     val generatingIntervalMs = props.getProperty("generator.intervalMs").toLong
 
     new KafkaEventProducer(topic, home, generatingIntervalMs).start()

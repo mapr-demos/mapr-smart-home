@@ -42,11 +42,11 @@ object EventProcessor {
       "value.deserializer" -> "org.apache.kafka.common.serialization.StringDeserializer"
     )
 
+
     val events = KafkaUtils.createDirectStream[String, String](
       ssc,
       LocationStrategies.PreferConsistent,
-      ConsumerStrategies.Subscribe[String, String](Set("/apps/smart-home-stream:events"), kafkaParams))
-
+      ConsumerStrategies.SubscribePattern[String, String](java.util.regex.Pattern.compile("/apps/smart-home-stream:events-.*"), kafkaParams))
 
     events.map(_.value()).mapPartitions(jsonStringIterator => {
 
@@ -88,7 +88,7 @@ object EventProcessor {
 
               log.info(s"$violatedEvent violates condition: '$condition'")
               val home = Home.findById(sensor.home_id)
-              val homeName = if(home.isDefined) home.get.name else "Not found"
+              val homeName = if (home.isDefined) home.get.name else "Not found"
 
               val jsonString = Json.toJson(Notification(violatedEvent, condition, homeName, sensor.name)).toString()
               kafkaProducer.send(new ProducerRecord[String, String]("/apps/smart-home-stream:notifications", jsonString))

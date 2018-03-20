@@ -4,7 +4,6 @@
 # Globals definition
 #######################################################################
 STREAM_PATH=/apps/smart-home-stream
-EVENTS_TOPIC_NAME=events
 NOTIFICATIONS_TOPIC_NAME=notifications
 
 HOMES_TABLE_PATH=/apps/homes
@@ -139,7 +138,6 @@ change_table_permissions ${SENSORS_TABLE_PATH}
 #######################################################################
 create_stream ${STREAM_PATH} ${RECREATE}
 
-create_topic ${STREAM_PATH} ${EVENTS_TOPIC_NAME}
 create_topic ${STREAM_PATH} ${NOTIFICATIONS_TOPIC_NAME}
 
 #######################################################################
