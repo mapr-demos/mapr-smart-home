@@ -3,6 +3,7 @@ package controllers
 import javax.inject.{Inject, Singleton}
 
 import model.Home
+import org.apache.hadoop.conf.Configuration
 import play.api.libs.json._
 import play.api.mvc._
 
@@ -61,6 +62,10 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
         _ => BadRequest(Json.obj("error" -> "Can not instantiate home from request body")),
         valid => {
           val createdHome = Home.insert(valid)
+
+          val admin = com.mapr.streams.Streams.newAdmin(new Configuration())
+          admin.createTopic("/apps/smart-home-stream", "events-" + createdHome._id.get)
+
           Created(Json.toJson(createdHome))
         }
       )
