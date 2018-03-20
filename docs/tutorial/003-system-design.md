@@ -4,6 +4,8 @@
 
 * [Overview](#overview)
 * [Design](#design)
+* [Grafana](#grafana)
+* [Streams Design](#streams-design)
 * [What's next?](#whats-next)
 * [Tutorial links](#tutorial-links)
 
@@ -48,6 +50,20 @@ Receives events and stores them at OpenTSDB. Each of sinks can be running standa
 
 As you can see in the image above, Grafana along with MapR-DB JSON Plugin can be used to visualize events, stored at 
 MapR-DB JSON Table. Also, its possible to use OpenTSDB Datasource in case when OpenTSDB Sink used.
+
+## Streams design
+
+System design image above depicts as events produced by separate home(the instance of event-generator) published to MapR 
+Stream. A stream is a collection of topics that you can manage together by:     
+1. Setting security policies that apply to all topics in that stream
+2. Setting a default number of partitions for each new topic that is created in the stream
+3. Set a time-to-live for messages in every topic in the stream
+
+MapR Smart Home System uses single `/apps/smart-home-stream` stream with `notifications` and `events-*` topics.
+Each Home has its own events topic in `events-{home id}` format. Such design allows processing data in a more 
+efficient way. [Stream](https://spark.apache.org/docs/2.2.0/streaming-programming-guide.html#discretized-streams-dstreams) 
+will consist of a number of RDDs which corresponds to the number of topics, each of RDD will consist of a number of 
+partitions that corresponds to topic's partitions. All that guarantees an adequate degree of parallelism.
 
 ## What's next?
 
