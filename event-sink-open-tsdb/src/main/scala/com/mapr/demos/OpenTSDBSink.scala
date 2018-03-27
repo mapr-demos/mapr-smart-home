@@ -4,7 +4,8 @@ import java.util.{Collections, Properties}
 
 import com.mapr.demos.OpenTSDBSink.props
 import com.mapr.demos.TSDBRecord.MetricName
-import org.apache.kafka.clients.consumer.{ConsumerRecords, KafkaConsumer}
+import org.apache.kafka.clients.consumer.{ConsumerRebalanceListener, ConsumerRecords, KafkaConsumer}
+import org.apache.kafka.common.TopicPartition
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.json.{Json, OWrites, Reads}
 
@@ -35,10 +36,20 @@ object OpenTSDBSink {
 
   def main(args: Array[String]): Unit = {
 
-        tsdbHost = if(args.length > 0) args(0) else props.getProperty("tsd.host")
+    tsdbHost = if(args.length > 0) args(0) else props.getProperty("tsd.host")
 
-        consumer.subscribe(Collections.singletonList(props.getProperty("topic")))
-        consume()
+    import org.apache.kafka.clients.consumer.ConsumerRebalanceListener
+    import org.apache.kafka.common.TopicPartition
+    import java.util.regex.Pattern
+    val listener = new ConsumerRebalanceListener() {
+      override def onPartitionsRevoked(topicPartitions: java.util.Collection[TopicPartition]): Unit = {}
+
+        override def onPartitionsAssigned(topicPartitions: java.util.Collection[TopicPartition]): Unit = {}
+    }
+
+    val pattern = Pattern.compile(props.getProperty("topic"))
+    consumer.subscribe(pattern, listener)
+    consume()
   }
 
   @tailrec

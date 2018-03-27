@@ -29,7 +29,18 @@ object EventSink {
 
   def main(args: Array[String]): Unit = {
 
-    consumer.subscribe(Collections.singletonList(props.getProperty("topic")))
+    import org.apache.kafka.clients.consumer.ConsumerRebalanceListener
+    import org.apache.kafka.common.TopicPartition
+    import java.util.regex.Pattern
+    val listener = new ConsumerRebalanceListener() {
+      override def onPartitionsRevoked(topicPartitions: java.util.Collection[TopicPartition]): Unit = {}
+
+      override def onPartitionsAssigned(topicPartitions: java.util.Collection[TopicPartition]): Unit = {}
+    }
+
+    val pattern = Pattern.compile(props.getProperty("topic"))
+    consumer.subscribe(pattern, listener)
+
     consume()
   }
 
