@@ -4,6 +4,12 @@ This repository contains sample event processing system based on MapR Converged 
 walks through a process of system development, starting from defining business requirements and ending with system deployment
 and testing.
 
+## Security Note
+
+Please note that this demo has not been updated recently and has a known security issue based on a dependency on
+`lodash.mergeTo` version 4.6.0. To fix this, you will need to update the `yarn.lock` file using the standard yarn tools 
+on a system where a more recent version in your environment. If you do this, please send a pull request with the result.
+
 ## Overview
 
 MapR Smart Home Tutorial is designated to walk user through a process of developing event processing system, starting 
