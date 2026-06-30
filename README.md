@@ -4,7 +4,11 @@ This repository contains sample event processing system based on MapR Converged 
 walks through a process of system development, starting from defining business requirements and ending with system deployment
 and testing.
 
-## Security Note
+## Security Notes
+
+This project has been archived since ancient Angular systems are too much work to keep updated. Please do not use this
+code directory. The concepts behind the use of MapR Event Streams as supported on HPE Data Fabric are still fine. It's
+just that this project is too old to use.
 
 Please note that this demo has not been updated recently and has a known security issue based on a dependency on
 `lodash.mergeTo` version 4.6.0. To fix this, you will need to update the `yarn.lock` file using the standard yarn tools 
